@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3688)
 @RequestMapping("/usuario")
 
-public class UsuarioController {
+public class UsuarioController{
 
     private final UsuarioService usuarioService;
 
@@ -61,7 +61,7 @@ public class UsuarioController {
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
-            return new ResponseEntity("Aluno não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }
             usuarioService.excluir(usuario.get());
             return new ResponseEntity(HttpStatus.OK);

@@ -14,21 +14,22 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "TB_TOPICO")
-public class Topico implements Serializable {
+@Table(name = "TB_Cidade")
+
+public class Cidade implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, unique = false, length = 250)
     private String nome;
 
     @Column(nullable = false, unique = false, length = 250)
-    private String local;
+    private String locais;
 
     @Column(nullable = false, unique = false, length = 250)
-    private String Cidade;
+    private String topicos;
 
     public void setRegistrationDate(LocalDateTime utc) {
     }
