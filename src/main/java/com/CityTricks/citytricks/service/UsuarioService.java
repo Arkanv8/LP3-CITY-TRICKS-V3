@@ -28,6 +28,7 @@ public class UsuarioService{
     public void save(UsuarioDTO usuario) {
 
         Usuario usuario1 = new Usuario();
+
         usuario1.setId(usuario.getId());
         usuario1.setNome(usuario.getNome());
         usuario1.setEmail(usuario.getEmail());
