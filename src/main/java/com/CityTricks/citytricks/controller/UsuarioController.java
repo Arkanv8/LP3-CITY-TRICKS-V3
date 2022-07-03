@@ -1,6 +1,7 @@
 package com.CityTricks.citytricks.controller;
 
 import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.UsuarioService;
 import org.springframework.beans.BeanUtils;
@@ -38,7 +39,6 @@ public class UsuarioController{
         BeanUtils.copyProperties(usuarioDTO, usuario);
         usuario.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         usuarioService.save(usuarioDTO);
-
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -56,16 +56,18 @@ public class UsuarioController{
         }
         return ResponseEntity.ok(usuario.map(UsuarioDTO::create));
     }
-
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
             return new ResponseEntity("Usuário não encontrado", HttpStatus.NOT_FOUND);
         }
+        try {
             usuarioService.excluir(usuario.get());
-            return new ResponseEntity(HttpStatus.OK);
-
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 }

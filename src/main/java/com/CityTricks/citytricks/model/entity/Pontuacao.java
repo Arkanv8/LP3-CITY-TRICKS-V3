@@ -7,32 +7,21 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "TB_AVALIACAO")
-public class Avaliacao implements Serializable{
+@Table(name = "TB_PONTUACAO")
+public class Pontuacao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private Long pontuacao;
 
-    private String usuario;
+    @ManyToOne
+    private Usuario usuarios;
 
-    private String nota;
-
-    private String titulo;
-
-    private String cidade;
-
-    private String topico;
-
-
-    public void setRegistrationDate(LocalDateTime utc) {
-    }
 }
