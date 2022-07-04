@@ -21,7 +21,7 @@ public class Pontuacao implements Serializable {
     private Long id;
     private Long pontuacao;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Usuario usuarios;
 
 }

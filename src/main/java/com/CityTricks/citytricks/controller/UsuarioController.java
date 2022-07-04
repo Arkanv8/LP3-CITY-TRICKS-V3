@@ -4,12 +4,12 @@ import com.CityTricks.citytricks.dto.UsuarioDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.UsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
@@ -17,6 +17,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
@@ -69,5 +70,22 @@ public class UsuarioController{
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
+
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid UsuarioDTO usuarioDTO) {
+        Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
+        if(!usuario.isPresent())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Usuário não encontrado!");
+        }
+        var usuarioEntity = new Usuario();
+        BeanUtils.copyProperties(usuarioDTO, usuarioEntity);
+        usuarioEntity.setId(usuario.get().getId());
+        usuarioEntity.setRegistrationDate(usuario.get().getRegistrationDate());
+        usuarioDTO.setId(usuario.get().getId());
+        usuarioService.save(usuarioDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 
 }

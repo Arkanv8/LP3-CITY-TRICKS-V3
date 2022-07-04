@@ -32,10 +32,14 @@ public class Usuario implements Serializable{
 
     private boolean admin;
 
-    @OneToMany(mappedBy = "usuarios")
-    private List<Pontuacao> pontuacoes;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private Pontuacao pontuacoes;
 
     public void setRegistrationDate(LocalDateTime utc) {
+    }
+
+    public LocalDateTime getRegistrationDate() {
+
+        return null;
     }
 }

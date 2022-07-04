@@ -16,18 +16,26 @@ public class UsuarioDTO {
     private String senha;
     private String nome;
     private String cidade;
+    private PontuacaoDTO pontuacoes;
     private boolean admin;
 
     public static UsuarioDTO create(Usuario usuario) {
         ModelMapper modelMapper = new ModelMapper();
         UsuarioDTO dto = modelMapper.map(usuario, UsuarioDTO.class);
         dto.id = usuario.getId();
-        dto.nome = usuario.getNome();
         dto.email = usuario.getEmail();
         dto.senha = usuario.getSenha();
-        dto.cidade = usuario.getCidade();
+        dto.nome = usuario.getNome();
+        if(usuario.getPontuacoes() != null)
+        {
+            dto.pontuacoes = modelMapper.map(usuario.getPontuacoes(), PontuacaoDTO.class);
+        }
         dto.admin = usuario.isAdmin();
 
-        return dto;
+        return modelMapper.map(usuario, UsuarioDTO.class);
     }
+
+
+
+
 }
