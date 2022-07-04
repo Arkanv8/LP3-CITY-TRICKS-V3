@@ -5,6 +5,7 @@ import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.CidadeService;
 import com.CityTricks.citytricks.service.UsuarioService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,6 +39,8 @@ public class CidadeController {
         var cidade = new Cidade();
         BeanUtils.copyProperties(cidadeDTO, cidade);
         cidade.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        ModelMapper modelMapper = new ModelMapper();
+        Cidade cidadeE = modelMapper.map(cidadeDTO, Cidade.class);
         cidadeService.save(cidadeDTO);
 
         return new ResponseEntity<Object>(HttpStatus.OK);

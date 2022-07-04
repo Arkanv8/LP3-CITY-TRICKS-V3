@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -28,8 +29,17 @@ public class Cidade implements Serializable{
     @Column(nullable = false, unique = false, length = 250)
     private String locais;
 
-    @Column(nullable = false, unique = false, length = 250)
-    private String topicos;
+    @OneToOne
+    private Estado estado;
+
+    @OneToOne
+    private Pais pais;
+
+    @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Topico> listaTopicos;
+
+    @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Comentario> listaComentarios;
 
     public void setRegistrationDate(LocalDateTime utc) {
     }
