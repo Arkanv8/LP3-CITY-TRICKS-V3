@@ -1,6 +1,6 @@
 package com.CityTricks.citytricks.model.repository;
 
-import com.CityTricks.citytricks.model.entity.Cidade;
+import com.CityTricks.citytricks.model.entity.Pontuacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -9,19 +9,19 @@ import javax.persistence.PersistenceContext;
 import java.util.Optional;
 
 @Repository
-public interface CidadeRepository extends JpaRepository<Cidade, Long> {
+public interface PontuacaoRepository extends JpaRepository<Pontuacao, Long> {
 
     @PersistenceContext
     public EntityManager entityManager = null;
 
-    public static void saveCidade(Cidade cidade) {
+    public static void saveUsuario(Pontuacao pontuacao) {
 
-        if (cidade.getId() == null) {
-            entityManager.persist(cidade);
+        if (pontuacao.getId() == null) {
+            entityManager.persist(pontuacao);
         } else {
-            entityManager.merge(cidade);
+            entityManager.merge(pontuacao);
         }
     }
 
-    Optional<Cidade> findById(Long id);
+    Optional<Pontuacao> findById(Long id);
 }
