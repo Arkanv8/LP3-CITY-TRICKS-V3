@@ -1,6 +1,9 @@
 package com.CityTricks.citytricks.dto;
 
 import com.CityTricks.citytricks.model.entity.Avaliacao;
+import com.CityTricks.citytricks.model.entity.Cidade;
+import com.CityTricks.citytricks.model.entity.Topico;
+import com.CityTricks.citytricks.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,11 +15,11 @@ import org.modelmapper.ModelMapper;
 public class AvaliacaoDTO {
 
     private Long id;
-    private String usuario;
+    private Usuario usuario;
     private String nota;
     private String titulo;
-    private String cidade;
-    private String topico;
+    private Cidade cidade;
+    private Topico topico;
 
     public static AvaliacaoDTO create(Avaliacao avaliacao) {
         ModelMapper modelMapper = new ModelMapper();

@@ -1,5 +1,6 @@
 package com.CityTricks.citytricks.dto;
 
+import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.Estado;
 import com.CityTricks.citytricks.model.entity.Pais;
 import lombok.AllArgsConstructor;
@@ -15,13 +16,16 @@ public class PaisDTO {
     private Long id;
 
     private String nome;
+    private Cidade cidade;
 
     public static PaisDTO create(Pais pais) {
         ModelMapper modelMapper = new ModelMapper();
         PaisDTO dto = modelMapper.map(pais, PaisDTO.class);
         dto.id = pais.getId();
         dto.nome = pais.getNome();
+        dto.cidade = pais.getCidade();
 
         return dto;
     }
+
 }

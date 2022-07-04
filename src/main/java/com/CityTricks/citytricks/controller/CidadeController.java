@@ -1,6 +1,7 @@
 package com.CityTricks.citytricks.controller;
 import com.CityTricks.citytricks.dto.CidadeDTO;
 import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.CidadeService;
@@ -61,15 +62,34 @@ public class CidadeController {
         return ResponseEntity.ok(cidade.map(CidadeDTO::create));
     }
 
-    @PutMapping("/delete/{id}")
+    @PutMapping("/{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid CidadeDTO cidadeDTO) {
+        Optional<Cidade> cidade = cidadeService.getCidadeById(id);
+        if(!cidade.isPresent())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cidade não encontrada!");
+        }
+        var cidadeEntity = new Cidade();
+        BeanUtils.copyProperties(cidadeDTO, cidadeEntity);
+        cidadeEntity.setId(cidade.get().getId());
+        cidadeEntity.setRegistrationDate(cidade.get().getRegistrationDate());
+        cidadeDTO.setId(cidade.get().getId());
+        cidadeService.save(cidadeDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cidade> cidade = cidadeService.getCidadeById(id);
         if (!cidade.isPresent()) {
-            return new ResponseEntity("Cidade não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Cidade não encontrada", HttpStatus.NOT_FOUND);
         }
-        cidadeService.excluir(cidade.get());
-        return new ResponseEntity(HttpStatus.OK);
-
+        try {
+            cidadeService.excluir(cidade.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
 

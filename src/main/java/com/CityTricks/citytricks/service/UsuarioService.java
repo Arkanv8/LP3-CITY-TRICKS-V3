@@ -1,6 +1,5 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.CidadeDTO;
 import com.CityTricks.citytricks.dto.PontuacaoDTO;
 import com.CityTricks.citytricks.dto.UsuarioDTO;
 import com.CityTricks.citytricks.model.entity.Pontuacao;

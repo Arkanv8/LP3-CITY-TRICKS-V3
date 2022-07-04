@@ -22,10 +22,8 @@ public class Topico implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(nullable = false, unique = false, length = 250)
     private String nome;
 
-    @Column(nullable = false, unique = false, length = 250)
     private String local;
 
     @ManyToOne
@@ -33,6 +31,9 @@ public class Topico implements Serializable {
 
     @OneToMany(mappedBy = "topico", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ComentarioTopico> listaComentarios;
+
+    @OneToMany(mappedBy = "topico", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Avaliacao> listaAvaliacao;
 
     public void setRegistrationDate(LocalDateTime utc) {
     }

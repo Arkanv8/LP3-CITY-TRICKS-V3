@@ -57,6 +57,7 @@ public class UsuarioController{
         }
         return ResponseEntity.ok(usuario.map(UsuarioDTO::create));
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);

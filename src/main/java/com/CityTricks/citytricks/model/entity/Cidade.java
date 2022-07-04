@@ -23,10 +23,8 @@ public class Cidade implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = false, length = 250)
     private String nome;
 
-    @Column(nullable = false, unique = false, length = 250)
     private String locais;
 
     @OneToOne
@@ -41,6 +39,15 @@ public class Cidade implements Serializable{
     @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Comentario> listaComentarios;
 
+    @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Avaliacao> listaAvaliacao;
+
+
+
     public void setRegistrationDate(LocalDateTime utc) {
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return null;
     }
 }

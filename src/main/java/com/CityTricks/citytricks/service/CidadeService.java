@@ -40,7 +40,7 @@ public class CidadeService{
         this.cidadeRepository = cidadeRepository;
     }
 
-    public void save(CidadeDTO cidade) {
+    public Cidade save(CidadeDTO cidade) {
 
         Cidade cidade1 = new Cidade();
 
@@ -75,6 +75,8 @@ public class CidadeService{
         cidade1.getListaComentarios().addAll(montaListaComentariosEntidade(cidade.getListaComentarios(), cidade1));
 
         cidadeRepository.save(cidade1);
+
+        return cidade1;
     }
 
     private List<Topico> montaListaTopicosEntidade(List<TopicoDTO> listaTopicos, Cidade cidade) {

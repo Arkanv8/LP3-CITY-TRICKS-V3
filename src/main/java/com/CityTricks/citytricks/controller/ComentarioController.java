@@ -1,7 +1,10 @@
 package com.CityTricks.citytricks.controller;
 
 import com.CityTricks.citytricks.dto.ComentarioDTO;
+import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Comentario;
+import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.ComentarioService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,16 +58,34 @@ public class ComentarioController{
         return ResponseEntity.ok(comentario.map(ComentarioDTO::create));
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Comentario> comentario = comentarioService.getComentarioById(id);
         if (!comentario.isPresent()) {
             return new ResponseEntity("Comentário não encontrado", HttpStatus.NOT_FOUND);
         }
-        comentarioService.excluir(comentario.get());
-        return new ResponseEntity(HttpStatus.OK);
-
+        try {
+            comentarioService.excluir(comentario.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid ComentarioDTO comentarioDTO) {
+        Optional<Comentario> comentario = comentarioService.getComentarioById(id);
+        if(!comentario.isPresent())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Comentario não encontrado!");
+        }
+        var comentarioEntity = new Comentario();
+        BeanUtils.copyProperties(comentarioDTO, comentarioEntity);
+        comentarioEntity.setId(comentario.get().getId());
+        comentarioEntity.setRegistrationDate(comentario.get().getRegistrationDate());
+        comentarioDTO.setId(comentario.get().getId());
+        comentarioService.save(comentarioDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 
 }

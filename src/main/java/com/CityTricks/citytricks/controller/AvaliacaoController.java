@@ -2,6 +2,7 @@ package com.CityTricks.citytricks.controller;
 
 import com.CityTricks.citytricks.dto.AvaliacaoDTO;
 import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Avaliacao;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.AvaliacaoService;
@@ -40,7 +41,6 @@ public class AvaliacaoController {
         BeanUtils.copyProperties(avaliacaoDTO, avaliacaoDTO);
         avaliacao.setRegistrationDate(LocalDateTime.now(ZoneId.of("UTC")));
         avaliacaoService.save(avaliacaoDTO);
-
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
@@ -58,14 +58,33 @@ public class AvaliacaoController {
         return ResponseEntity.ok(avaliacao.map(AvaliacaoDTO::create));
     }
 
-    @PutMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Avaliacao> avaliacao = avaliacaoService.getAvaliacaoById(id);
         if (!avaliacao.isPresent()) {
             return new ResponseEntity("Avaliação não encontrada", HttpStatus.NOT_FOUND);
         }
-        avaliacaoService.excluir(avaliacao.get());
-        return new ResponseEntity(HttpStatus.OK);
-
+        try {
+            avaliacaoService.excluir(avaliacao.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
+    @PutMapping("{id}")
+    public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid AvaliacaoDTO avaliacaoDTO) {
+        Optional<Avaliacao> avaliacao = avaliacaoService.getAvaliacaoById(id);
+        if(!avaliacao.isPresent())
+        {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Avaliacação não encontrada!");
+        }
+        var avaliacaoEntity = new Avaliacao();
+        BeanUtils.copyProperties(avaliacaoDTO, avaliacaoEntity);
+        avaliacaoEntity.setId(avaliacao.get().getId());
+        avaliacaoEntity.setRegistrationDate(avaliacao.get().getRegistrationDate());
+        avaliacaoDTO.setId(avaliacao.get().getId());
+        avaliacaoService.save(avaliacaoDTO);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
 }

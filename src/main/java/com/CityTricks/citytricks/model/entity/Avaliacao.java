@@ -22,17 +22,33 @@ public class Avaliacao implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String usuario;
+    @OneToOne
+    private Usuario usuario;
 
     private String nota;
 
     private String titulo;
 
-    private String cidade;
+    @OneToOne
+    private Topico topico;
 
-    private String topico;
+    @ManyToOne
+    @JoinColumn(name = "cidade_id")
+    private Cidade cidade;
+
+    public com.CityTricks.citytricks.model.entity.Cidade getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(com.CityTricks.citytricks.model.entity.Cidade cidade) {
+        this.cidade = cidade;
+    }
 
 
     public void setRegistrationDate(LocalDateTime utc) {
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return null;
     }
 }

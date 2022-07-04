@@ -21,18 +21,19 @@ public class Comentario implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = true, unique = false, length = 250)
     private String titulo;
 
-    @Column(nullable = true, unique = false, length = 250)
     private String informacao;
 
-    @Column(nullable = true, unique = false, length = 250)
     private String nota;
 
     @ManyToOne
     private Cidade cidade;
 
     public void setRegistrationDate(LocalDateTime utc) {
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return null;
     }
 }

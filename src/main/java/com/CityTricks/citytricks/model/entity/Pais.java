@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -18,9 +19,16 @@ public class Pais {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = false, length = 250)
     private String nome;
 
     @OneToOne(cascade = CascadeType.ALL)
     private Cidade cidade;
+
+    public void setRegistrationDate(LocalDateTime utc) {
+
+    }
+
+    public LocalDateTime getRegistrationDate() {
+        return null;
+    }
 }
