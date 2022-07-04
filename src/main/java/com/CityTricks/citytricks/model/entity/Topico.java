@@ -8,13 +8,14 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "TB_TOPICO")
+@Table(name = "tb_topico")
 public class Topico implements Serializable {
 
     @Id
@@ -27,8 +28,11 @@ public class Topico implements Serializable {
     @Column(nullable = false, unique = false, length = 250)
     private String local;
 
-    @Column(nullable = false, unique = false, length = 250)
-    private String Cidade;
+    @ManyToOne
+    private Cidade cidade;
+
+    @OneToMany(mappedBy = "topico", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<ComentarioTopico> listaComentarios;
 
     public void setRegistrationDate(LocalDateTime utc) {
     }

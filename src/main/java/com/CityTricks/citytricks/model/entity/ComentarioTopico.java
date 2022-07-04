@@ -14,9 +14,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "TB_COMENTARIO")
-public class Comentario implements Serializable{
-
+@Table(name = "TB_COMENTARIO_TOPICO")
+public class ComentarioTopico implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +30,8 @@ public class Comentario implements Serializable{
     private String nota;
 
     @ManyToOne
-    private Cidade cidade;
+    private Topico topico;
+
 
     public void setRegistrationDate(LocalDateTime utc) {
     }
