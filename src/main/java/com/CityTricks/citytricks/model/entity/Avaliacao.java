@@ -32,7 +32,7 @@ public class Avaliacao implements Serializable{
     @OneToOne
     private Topico topico;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cidade_id")
     private Cidade cidade;
 
@@ -45,9 +45,9 @@ public class Avaliacao implements Serializable{
     }
 
 
-    public void setRegistrationDate(LocalDateTime utc) {
-    }
 
+
+    public void setRegistrationDate(LocalDateTime utc) {}
     public LocalDateTime getRegistrationDate() {
         return null;
     }

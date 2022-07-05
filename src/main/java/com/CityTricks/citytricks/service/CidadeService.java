@@ -1,13 +1,7 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.CidadeDTO;
-import com.CityTricks.citytricks.dto.ComentarioDTO;
-import com.CityTricks.citytricks.dto.ComentarioTopicoDTO;
-import com.CityTricks.citytricks.dto.TopicoDTO;
-import com.CityTricks.citytricks.model.entity.Cidade;
-import com.CityTricks.citytricks.model.entity.Comentario;
-import com.CityTricks.citytricks.model.entity.ComentarioTopico;
-import com.CityTricks.citytricks.model.entity.Topico;
+import com.CityTricks.citytricks.dto.*;
+import com.CityTricks.citytricks.model.entity.*;
 import com.CityTricks.citytricks.model.repository.CidadeRepository;
 import com.CityTricks.citytricks.model.repository.EstadoRepository;
 import com.CityTricks.citytricks.model.repository.PaisRepository;
@@ -74,6 +68,20 @@ public class CidadeService{
         }
         cidade1.getListaComentarios().addAll(montaListaComentariosEntidade(cidade.getListaComentarios(), cidade1));
 
+        if(cidade1.getListaAvaliacao() == null) {
+            cidade1.setListaAvaliacao(new ArrayList<>());
+        }
+
+        if(cidade1.getListaAvaliacao() != null){
+            cidade1.getListaAvaliacao().clear();
+            cidadeRepository.flush();
+        }
+        else {
+            cidade1.setListaAvaliacao(new ArrayList<>());
+        }
+
+        //cidade1.getListaAvaliacao().addAll(montaListaAvaliacaoEntidade(cidade.getListaAvaliacao(), cidade1));
+
         cidadeRepository.save(cidade1);
 
         return cidade1;
@@ -89,6 +97,32 @@ public class CidadeService{
         }
         return topicos;
     }
+
+    /* private List<Avaliacao> montaListaAvaliacaoEntidade(List<AvaliacaoDTO> listaAvaliacao, Cidade cidade) {
+        if (listaAvaliacao == null || listaAvaliacao.isEmpty()) {
+            return new ArrayList<Avaliacao>();
+        }
+        List<Avaliacao> avaliacao = new ArrayList<Avaliacao>();
+        for (AvaliacaoDTO avaliacaoDTO : listaAvaliacao) {
+            avaliacao.add(preencherAvaliacao(avaliacaoDTO, cidade));
+        }
+        return avaliacao;
+    }
+*/
+    private Avaliacao preencherAvaliacao(AvaliacaoDTO avaliacaoDTO, Cidade cidade, Usuario usuario, Topico topico) {
+        Avaliacao avaliacao = new Avaliacao();
+
+        avaliacao.setId(avaliacaoDTO.getId());
+        avaliacao.setUsuario(usuario);
+        avaliacao.setCidade(cidade);
+        avaliacao.setNota(avaliacaoDTO.getNota());
+        avaliacao.setTitulo(avaliacaoDTO.getTitulo());
+        avaliacao.setTopico(topico);
+
+        cidadeRepository.flush();
+        return avaliacao;
+    }
+
 
     private Topico preencherTopico(TopicoDTO topicoDto, Cidade cidade) {
         Topico topico = new Topico();

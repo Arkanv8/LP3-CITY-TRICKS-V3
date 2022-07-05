@@ -25,6 +25,8 @@ public class CidadeDTO {
 
     private List<ComentarioDTO> listaComentarios;
 
+    private List<AvaliacaoDTO> listaAvaliacao;
+
     public static CidadeDTO create(Cidade cidade) {
         ModelMapper modelMapper = new ModelMapper();
         CidadeDTO dto = modelMapper.map(cidade, CidadeDTO.class);
@@ -45,6 +47,13 @@ public class CidadeDTO {
             dto.listaComentarios = new ArrayList<>();
             for (Comentario comment : cidade.getListaComentarios()) {
                 dto.listaComentarios.add(modelMapper.map(comment, ComentarioDTO.class));
+            }
+        }
+
+        if(cidade.getListaAvaliacao() != null) {
+            dto.listaAvaliacao = new ArrayList<>();
+            for (Avaliacao comment : cidade.getListaAvaliacao()) {
+                dto.listaAvaliacao.add(modelMapper.map(comment, AvaliacaoDTO.class));
             }
         }
 
