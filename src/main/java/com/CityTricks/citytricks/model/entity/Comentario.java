@@ -27,9 +27,6 @@ public class Comentario implements Serializable{
 
     private String nota;
 
-    @ManyToOne
-    private Cidade cidade;
-
     public void setRegistrationDate(LocalDateTime utc) {
     }
 

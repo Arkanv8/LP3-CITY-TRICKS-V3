@@ -37,10 +37,10 @@ public class Cidade implements Serializable{
     private List<Topico> listaTopicos;
 
     @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Comentario> listaComentarios;
+    private List<ComentarioCidade> listaComentarios;
 
     @OneToMany(mappedBy = "cidade", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Avaliacao> listaAvaliacao;
+    private List<AvaliacaoCidade> listaAvaliacao;
 
 
 

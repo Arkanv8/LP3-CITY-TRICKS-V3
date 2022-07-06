@@ -5,20 +5,16 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
+import javax.persistence.Entity;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ComentarioTopico extends Comentario {
+public class AvaliacaoTopico extends Avaliacao{
 
-    @ManyToOne
+    @OneToOne
     private Topico topico;
-
-
-    public void setRegistrationDate(LocalDateTime utc) {
-    }
 }

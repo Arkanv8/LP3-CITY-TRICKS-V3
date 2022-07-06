@@ -29,23 +29,6 @@ public class Avaliacao implements Serializable{
 
     private String titulo;
 
-    @OneToOne
-    private Topico topico;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "cidade_id")
-    private Cidade cidade;
-
-    public com.CityTricks.citytricks.model.entity.Cidade getCidade() {
-        return cidade;
-    }
-
-    public void setCidade(com.CityTricks.citytricks.model.entity.Cidade cidade) {
-        this.cidade = cidade;
-    }
-
-
-
 
     public void setRegistrationDate(LocalDateTime utc) {}
     public LocalDateTime getRegistrationDate() {

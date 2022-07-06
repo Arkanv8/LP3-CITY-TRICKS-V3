@@ -5,6 +5,7 @@ import com.CityTricks.citytricks.model.entity.*;
 import com.CityTricks.citytricks.model.repository.CidadeRepository;
 import com.CityTricks.citytricks.model.repository.EstadoRepository;
 import com.CityTricks.citytricks.model.repository.PaisRepository;
+import com.CityTricks.citytricks.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -19,7 +20,6 @@ public class CidadeService{
 
     private final CidadeRepository cidadeRepository;
 
-
     @Autowired
     private EstadoRepository estadoRepository;
 
@@ -27,7 +27,19 @@ public class CidadeService{
     private PaisRepository paisRepository;
 
     @Autowired
+    private UsuarioRepository usuarioRepository;
+
+    @Autowired
     private CidadeRepository repository;
+
+    @Autowired
+    private TopicoService topicoService;
+
+    @Autowired
+    private AvaliacaoCidadeService avaliacaoCidadeService;
+
+    @Autowired
+    private ComentarioCidadeService comentarioCidadeService;
 
     public CidadeService(CidadeRepository cidadeRepository)
     {
@@ -45,9 +57,6 @@ public class CidadeService{
         cidade1.setEstado(estadoRepository.getReferenceById(idEstado));
         cidade1.setPais(paisRepository.getReferenceById(cidade.getPais().getId()));
 
-        if(cidade1.getListaTopicos() == null) {
-            cidade1.setListaTopicos(new ArrayList<>());
-        }
 
         if(cidade1.getListaTopicos() != null){
             cidade1.getListaTopicos().clear();
@@ -57,7 +66,7 @@ public class CidadeService{
             cidade1.setListaTopicos(new ArrayList<>());
         }
 
-        cidade1.getListaTopicos().addAll(montaListaTopicosEntidade(cidade.getListaTopicos(), cidade1));
+        cidade1.getListaTopicos().addAll(topicoService.montaListaTopicosEntidade(cidade.getListaTopicos(), cidade1));
 
         if(cidade1.getListaComentarios() != null){
             cidade1.getListaComentarios().clear();
@@ -66,11 +75,7 @@ public class CidadeService{
         else {
             cidade1.setListaComentarios(new ArrayList<>());
         }
-        cidade1.getListaComentarios().addAll(montaListaComentariosEntidade(cidade.getListaComentarios(), cidade1));
-
-        if(cidade1.getListaAvaliacao() == null) {
-            cidade1.setListaAvaliacao(new ArrayList<>());
-        }
+        cidade1.getListaComentarios().addAll(comentarioCidadeService.montaListaComentariosEntidade(cidade.getListaComentarios(), cidade1));
 
         if(cidade1.getListaAvaliacao() != null){
             cidade1.getListaAvaliacao().clear();
@@ -80,114 +85,13 @@ public class CidadeService{
             cidade1.setListaAvaliacao(new ArrayList<>());
         }
 
-        //cidade1.getListaAvaliacao().addAll(montaListaAvaliacaoEntidade(cidade.getListaAvaliacao(), cidade1));
+        cidade1.getListaAvaliacao().addAll(avaliacaoCidadeService.montaListaAvaliacaoEntidade(cidade.getListaAvaliacao(), cidade1));
 
         cidadeRepository.save(cidade1);
 
         return cidade1;
     }
 
-    private List<Topico> montaListaTopicosEntidade(List<TopicoDTO> listaTopicos, Cidade cidade) {
-        if (listaTopicos == null || listaTopicos.isEmpty()) {
-            return new ArrayList<Topico>();
-        }
-        List<Topico> topicos = new ArrayList<Topico>();
-        for (TopicoDTO topicoDTO : listaTopicos) {
-            topicos.add(preencherTopico(topicoDTO, cidade));
-        }
-        return topicos;
-    }
-
-    /* private List<Avaliacao> montaListaAvaliacaoEntidade(List<AvaliacaoDTO> listaAvaliacao, Cidade cidade) {
-        if (listaAvaliacao == null || listaAvaliacao.isEmpty()) {
-            return new ArrayList<Avaliacao>();
-        }
-        List<Avaliacao> avaliacao = new ArrayList<Avaliacao>();
-        for (AvaliacaoDTO avaliacaoDTO : listaAvaliacao) {
-            avaliacao.add(preencherAvaliacao(avaliacaoDTO, cidade));
-        }
-        return avaliacao;
-    }
-*/
-    private Avaliacao preencherAvaliacao(AvaliacaoDTO avaliacaoDTO, Cidade cidade, Usuario usuario, Topico topico) {
-        Avaliacao avaliacao = new Avaliacao();
-
-        avaliacao.setId(avaliacaoDTO.getId());
-        avaliacao.setUsuario(usuario);
-        avaliacao.setCidade(cidade);
-        avaliacao.setNota(avaliacaoDTO.getNota());
-        avaliacao.setTitulo(avaliacaoDTO.getTitulo());
-        avaliacao.setTopico(topico);
-
-        cidadeRepository.flush();
-        return avaliacao;
-    }
-
-
-    private Topico preencherTopico(TopicoDTO topicoDto, Cidade cidade) {
-        Topico topico = new Topico();
-
-        topico.setId(topicoDto.getId());
-        topico.setNome(topicoDto.getNome());
-        topico.setCidade(cidade);
-        topico.setLocal(topicoDto.getLocal());
-
-        if(topico.getListaComentarios() == null) {
-            topico.setListaComentarios(new ArrayList<>());
-        }
-
-        topico.getListaComentarios().clear();
-        cidadeRepository.flush();
-        topico.getListaComentarios().addAll(montaListaComentariosTopicoEntidade(topicoDto.getListaComentarios(), topico));
-
-        return topico;
-    }
-
-    private List<ComentarioTopico> montaListaComentariosTopicoEntidade(List<ComentarioTopicoDTO> listaComentarios, Topico topico) {
-        if (listaComentarios == null || listaComentarios.isEmpty()) {
-            return new ArrayList<ComentarioTopico>();
-        }
-        List<ComentarioTopico> comentarios = new ArrayList<ComentarioTopico>();
-        for (ComentarioTopicoDTO commentDTO : listaComentarios) {
-            comentarios.add(preencherComentarioTopico(commentDTO, topico));
-        }
-        return comentarios;
-    }
-
-    private ComentarioTopico preencherComentarioTopico(ComentarioTopicoDTO commentDto, Topico topico) {
-        ComentarioTopico comentario = new ComentarioTopico();
-
-        comentario.setId(commentDto.getId());
-        comentario.setTitulo(commentDto.getTitulo());
-        comentario.setInformacao(commentDto.getInformacao());
-        comentario.setNota(commentDto.getNota());
-        comentario.setTopico(topico);
-
-        return comentario;
-    }
-
-    private List<Comentario> montaListaComentariosEntidade(List<ComentarioDTO> listaComentarios, Cidade cidade) {
-        if (listaComentarios == null || listaComentarios.isEmpty()) {
-            return new ArrayList<Comentario>();
-        }
-        List<Comentario> comentarios = new ArrayList<Comentario>();
-        for (ComentarioDTO commentDTO : listaComentarios) {
-            comentarios.add(preencherComentario(commentDTO, cidade));
-        }
-        return comentarios;
-    }
-
-    private Comentario preencherComentario(ComentarioDTO commentDto, Cidade cidade) {
-        Comentario comentario = new Comentario();
-
-        comentario.setId(commentDto.getId());
-        comentario.setTitulo(commentDto.getTitulo());
-        comentario.setInformacao(commentDto.getInformacao());
-        comentario.setNota(commentDto.getNota());
-        comentario.setCidade(cidade);
-
-        return comentario;
-    }
 
     // GET GERAL
     public List<Cidade> getCidade() {

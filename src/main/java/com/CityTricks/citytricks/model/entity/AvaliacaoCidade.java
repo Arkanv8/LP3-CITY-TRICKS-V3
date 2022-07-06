@@ -6,19 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ComentarioTopico extends Comentario {
+public class AvaliacaoCidade extends Avaliacao{
 
-    @ManyToOne
-    private Topico topico;
-
-
-    public void setRegistrationDate(LocalDateTime utc) {
-    }
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cidade_id")
+    private Cidade cidade;
 }

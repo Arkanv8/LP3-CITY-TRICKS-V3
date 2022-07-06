@@ -1,5 +1,6 @@
 package com.CityTricks.citytricks.dto;
 
+import com.CityTricks.citytricks.model.entity.AvaliacaoTopico;
 import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.ComentarioTopico;
 import com.CityTricks.citytricks.model.entity.Topico;
@@ -23,6 +24,8 @@ public class TopicoDTO {
 
     private List<ComentarioTopicoDTO> listaComentarios;
 
+    private List<AvaliacaoTopicoDTO> listaAvaliacao;
+
     public static TopicoDTO create(Topico topico)
     {
         ModelMapper modelMapper = new ModelMapper();
@@ -35,6 +38,13 @@ public class TopicoDTO {
             dto.listaComentarios = new ArrayList<>();
             for (ComentarioTopico comentario : topico.getListaComentarios()) {
                 dto.listaComentarios.add(modelMapper.map(comentario, ComentarioTopicoDTO.class));
+            }
+        }
+
+        if(topico.getListaAvaliacao() != null) {
+            dto.listaAvaliacao = new ArrayList<>();
+            for (AvaliacaoTopico avaliacao : topico.getListaAvaliacao()) {
+                dto.listaAvaliacao.add(modelMapper.map(avaliacao, AvaliacaoTopicoDTO.class));
             }
         }
 

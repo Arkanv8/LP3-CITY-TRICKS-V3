@@ -33,7 +33,7 @@ public class Topico implements Serializable {
     private List<ComentarioTopico> listaComentarios;
 
     @OneToMany(mappedBy = "topico", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<Avaliacao> listaAvaliacao;
+    private List<AvaliacaoTopico> listaAvaliacao;
 
     public void setRegistrationDate(LocalDateTime utc) {
     }
