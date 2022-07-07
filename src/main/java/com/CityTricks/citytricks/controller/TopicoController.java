@@ -1,6 +1,8 @@
 package com.CityTricks.citytricks.controller;
 
 import com.CityTricks.citytricks.dto.TopicoDTO;
+import com.CityTricks.citytricks.exception.RegraNegocioException;
+import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.service.TopicoService;
 import org.springframework.beans.BeanUtils;
@@ -57,13 +59,29 @@ public class TopicoController {
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity excluir(@PathVariable("id") Long id) {
+    public ResponseEntity atualizar(@PathVariable("id") Long id) {
         Optional<Topico> topico = topicoService.getTopicoById(id);
         if (!topico.isPresent()) {
-            return new ResponseEntity("Topico não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity("Tópico não encontrado", HttpStatus.NOT_FOUND);
         }
         topicoService.excluir(topico.get());
         return new ResponseEntity(HttpStatus.OK);
-
     }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity excluir(@PathVariable("id") Long id) {
+        Optional<Topico> topico = topicoService.getTopicoById(id);
+        if (!topico.isPresent()) {
+            return new ResponseEntity("Tópico não encontrado", HttpStatus.NOT_FOUND);
+        }
+        try {
+            topicoService.excluir(topico.get());
+            return new ResponseEntity(HttpStatus.NO_CONTENT);
+        } catch (RegraNegocioException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+
+
 }
