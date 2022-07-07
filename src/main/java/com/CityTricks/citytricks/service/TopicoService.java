@@ -81,14 +81,8 @@ public class TopicoService {
 
     public void save(TopicoDTO topico) {
 
-        Topico topico1 = new Topico();
-
-        topico1.setId(topico.getId());
-        topico1.setNome(topico.getNome());
-        //topico1.setCidade(topico.getCidade());
-        topico1.setLocal(topico.getLocal());
+        Topico topico1 = preencherTopico(topico, null);
         topicoRepository.save(topico1);
-
     }
 
     // GET GERAL

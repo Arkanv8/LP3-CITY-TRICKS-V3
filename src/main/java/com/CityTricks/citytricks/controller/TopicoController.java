@@ -58,7 +58,7 @@ public class TopicoController {
         return ResponseEntity.ok(topico.map(TopicoDTO::create));
     }
 
-    @PutMapping("/delete/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity atualizar(@PathVariable("id") Long id) {
         Optional<Topico> topico = topicoService.getTopicoById(id);
         if (!topico.isPresent()) {
