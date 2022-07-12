@@ -24,6 +24,8 @@ public class Usuario implements Serializable{
 
     private String email;
 
+    private String login;
+
     private String senha;
 
     private String nome;
@@ -41,5 +43,13 @@ public class Usuario implements Serializable{
     public LocalDateTime getRegistrationDate() {
 
         return null;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
     }
 }

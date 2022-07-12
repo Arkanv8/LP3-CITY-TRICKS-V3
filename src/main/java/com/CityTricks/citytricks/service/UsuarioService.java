@@ -2,11 +2,16 @@ package com.CityTricks.citytricks.service;
 
 import com.CityTricks.citytricks.dto.PontuacaoDTO;
 import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.exception.SenhaInvalidaException;
 import com.CityTricks.citytricks.model.entity.Pontuacao;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.model.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +24,9 @@ import java.util.Optional;
 public class UsuarioService {
 
     private final UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     private UsuarioRepository repository;
@@ -75,6 +83,34 @@ public class UsuarioService {
     public void excluir(Usuario usuario) {
         Objects.requireNonNull(usuario.getId());
         repository.delete(usuario);
+    }
+
+    public UserDetails autenticar(Usuario usuario){
+        UserDetails user = loadUserByUsername(usuario.getLogin());
+        boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+
+        if (senhasBatem){
+            return user;
+        }
+        throw new SenhaInvalidaException();
+    }
+
+
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        Usuario usuario = repository.findByLogin(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+        String[] roles = usuario.isAdmin()
+                ? new String[]{"ADMIN", "USER"}
+                : new String[]{"USER"};
+
+        return User
+                .builder()
+                .username(usuario.getLogin())
+                .password(usuario.getSenha())
+                .roles(roles)
+                .build();
     }
 
 }
