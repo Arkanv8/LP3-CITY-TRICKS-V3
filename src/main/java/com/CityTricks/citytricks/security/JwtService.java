@@ -2,7 +2,6 @@ package com.CityTricks.citytricks.security;
 
 import com.CityTricks.citytricks.model.entity.Usuario;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -39,7 +38,7 @@ public class JwtService {
                 .compact();
     }
 
-    private Claims obterClaims( String token ) throws ExpiredJwtException {
+     private Claims obterClaims( String token ) {
         return Jwts
                 .parser()
                 .setSigningKey(chaveAssinatura)
@@ -47,7 +46,9 @@ public class JwtService {
                 .getBody();
     }
 
-    public boolean tokenValido(String token){
+
+
+     public boolean tokenValido(String token){
         try{
             Claims claims = obterClaims(token);
             Date dataExpiracao = claims.getExpiration();
@@ -60,7 +61,11 @@ public class JwtService {
         }
     }
 
-    public String obterLoginUsuario(String token) throws ExpiredJwtException{
+
+
+      public String obterLoginUsuario(String token) {
         return (String) obterClaims(token).getSubject();
     }
+    
+
 }
