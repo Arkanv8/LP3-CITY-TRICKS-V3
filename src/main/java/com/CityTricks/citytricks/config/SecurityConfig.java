@@ -1,5 +1,6 @@
 package com.CityTricks.citytricks.config;
 
+import com.CityTricks.citytricks.model.repository.UsuarioRepository;
 import com.CityTricks.citytricks.security.JwtAuthFilter;
 import com.CityTricks.citytricks.security.JwtService;
 import com.CityTricks.citytricks.service.UsuarioService;
@@ -22,7 +23,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UsuarioService usuarioService;
-
     @Autowired
     private JwtService jwtService;
 
@@ -48,17 +48,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/alunos/**")
+                .antMatchers("/com/CityTricks/citytricks/usuario/**")
                 .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/v1/cursos/**")
+                .antMatchers("/com/CityTricks/citytricks/topico/**")
                 .hasAnyRole("USER", "ADMIN")
-                .antMatchers("/api/v1/disciplinas/**")
+                .antMatchers("/com/CityTricks/citytricks/estado/**")
                 .hasRole("ADMIN")
-                .antMatchers("/api/v1/professores/**")
+                .antMatchers("/com/CityTricks/citytricks/cidade/**")
                 .hasRole("ADMIN")
-                .antMatchers("/api/v1/turmas/**")
+                .antMatchers("/com/CityTricks/citytricks/avaliacao/**")
                 .hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/v1/usuarios/**")
+                .antMatchers(HttpMethod.POST, "/com/CityTricks/citytricks/avaliacao-topico/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
