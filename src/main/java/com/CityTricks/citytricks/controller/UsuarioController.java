@@ -1,16 +1,23 @@
 package com.CityTricks.citytricks.controller;
 
+import com.CityTricks.citytricks.dto.CredenciaisDTO;
+import com.CityTricks.citytricks.dto.TokenDTO;
 import com.CityTricks.citytricks.dto.UsuarioDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
+import com.CityTricks.citytricks.exception.SenhaInvalidaException;
 import com.CityTricks.citytricks.model.entity.Usuario;
+import com.CityTricks.citytricks.security.JwtService;
 import com.CityTricks.citytricks.service.UsuarioService;
 import jakarta.validation.Valid;
-import org.modelmapper.ModelMapper;
+import io.swagger.annotations.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -22,15 +29,18 @@ import java.util.stream.Collectors;
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
 @RequestMapping("/usuario")
+@Api("API de Usuários")
 
 public class UsuarioController{
 
     private final UsuarioService usuarioService;
+    private final JwtService jwtService;
 
     @Autowired
-    public UsuarioController(UsuarioService usuarioService) {
+    public UsuarioController(UsuarioService usuarioService, JwtService jwtService) {
 
         this.usuarioService = usuarioService;
+        this.jwtService = jwtService;
     }
 
     @PostMapping(path="/salvar")
@@ -43,13 +53,41 @@ public class UsuarioController{
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
+    @PostMapping("/auth")
+    public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
+        try{
+            Usuario usuario = Usuario.builder()
+                    .login(credenciais.getLogin())
+                    .senha(credenciais.getSenha()).build();
+            UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
+            String token = jwtService.gerarToken(usuario);
+            return new TokenDTO(usuario.getLogin(), token);
+        } catch (UsernameNotFoundException | SenhaInvalidaException e ){
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
+        }
+    }
+
+
+
+
+
+
+
+
 
     @GetMapping()
     public ResponseEntity get() {
         List<Usuario> usuario = usuarioService.getUsuario();
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
+
+
     @GetMapping("/{id}")
+    @ApiOperation(value="Obter detalhes de um Usuário")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuário encontrado!"),
+            @ApiResponse(code = 404, message = "Usuário não encontrado!")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
