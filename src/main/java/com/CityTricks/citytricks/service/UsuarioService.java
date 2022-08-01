@@ -10,6 +10,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ import java.util.Optional;
 
 
 @Service
-public class UsuarioService {
+public class UsuarioService implements UserDetailsService {
 
     @Autowired
     private final UsuarioRepository usuarioRepository;
@@ -60,30 +61,26 @@ public class UsuarioService {
         return pontuacao;
     }
 
-
     // GET GERAL
     public List<Usuario> getUsuario() {
         return repository.findAll();
     }
-
     // GET PELO ID
     public Optional<Usuario> getUsuarioById(Long id) {
         return repository.findById(id);
     }
-
     // SALVAR (POST)
     @Transactional
     public Usuario salvar(Usuario usuario) {
         return repository.save(usuario);
     }
-
-
     // DELETE MAPPING PELO ID
     @Transactional
     public void excluir(Usuario usuario) {
         Objects.requireNonNull(usuario.getId());
         repository.delete(usuario);
     }
+
 
     public UserDetails autenticar(Usuario usuario){
         UserDetails user = loadUserByUsername(usuario.getLogin());
@@ -94,7 +91,6 @@ public class UsuarioService {
         }
         throw new SenhaInvalidaException();
     }
-
 
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 

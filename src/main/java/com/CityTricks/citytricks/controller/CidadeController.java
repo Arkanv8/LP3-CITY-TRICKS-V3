@@ -6,6 +6,7 @@ import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.CidadeService;
 import com.CityTricks.citytricks.service.UsuarioService;
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.stereotype.Service;
 
-import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.List;
