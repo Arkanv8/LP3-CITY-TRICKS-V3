@@ -54,8 +54,8 @@ public class CidadeService{
         cidade1.setNome(cidade.getNome());
         cidade1.setLocais(cidade.getLocais());
         Long idEstado = cidade.getEstado().getId();
-        cidade1.setEstado(estadoRepository.getReferenceById(idEstado));
-        cidade1.setPais(paisRepository.getReferenceById(cidade.getPais().getId()));
+        cidade1.setEstado(estadoRepository.getById(idEstado));
+        cidade1.setPais(paisRepository.getById(cidade.getPais().getId()));
 
 
         if(cidade1.getListaTopicos() != null){

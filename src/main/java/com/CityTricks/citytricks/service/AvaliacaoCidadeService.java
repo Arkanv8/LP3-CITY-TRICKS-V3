@@ -37,7 +37,7 @@ public class AvaliacaoCidadeService {
         AvaliacaoCidade avaliacao = new AvaliacaoCidade();
 
         avaliacao.setId(avaliacaoDTO.getId());
-        avaliacao.setUsuario(usuarioRepository.getReferenceById(avaliacaoDTO.getUsuario().getId()));
+        avaliacao.setUsuario(usuarioRepository.getById(avaliacaoDTO.getUsuario().getId()));
         avaliacao.setCidade(cidade);
         avaliacao.setNota(avaliacaoDTO.getNota());
         avaliacao.setTitulo(avaliacaoDTO.getTitulo());
@@ -50,7 +50,7 @@ public class AvaliacaoCidadeService {
         AvaliacaoCidade avaliacaoCidade1 = new AvaliacaoCidade();
 
         avaliacaoCidade1.setId(avaliacaoCidade.getId());
-        avaliacaoCidade1.setUsuario(usuarioRepository.getReferenceById(avaliacaoCidade.getUsuario().getId()));
+        avaliacaoCidade1.setUsuario(usuarioRepository.getById(avaliacaoCidade.getUsuario().getId()));
         avaliacaoCidade1.setNota(avaliacaoCidade.getNota());
         avaliacaoCidade1.setTitulo(avaliacaoCidade.getTitulo());
 

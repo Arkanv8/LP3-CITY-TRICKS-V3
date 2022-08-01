@@ -38,7 +38,7 @@ public class AvaliacaoTopicoService {
         AvaliacaoTopico avaliacao = new AvaliacaoTopico();
 
         avaliacao.setId(avaliacaoDTO.getId());
-        avaliacao.setUsuario(usuarioRepository.getReferenceById(avaliacaoDTO.getUsuario().getId()));
+        avaliacao.setUsuario(usuarioRepository.getById(avaliacaoDTO.getUsuario().getId()));
         avaliacao.setTopico(topico);
         avaliacao.setNota(avaliacaoDTO.getNota());
         avaliacao.setTitulo(avaliacaoDTO.getTitulo());
@@ -51,7 +51,7 @@ public class AvaliacaoTopicoService {
         AvaliacaoTopico avaliacaoTopico1 = new AvaliacaoTopico();
 
         avaliacaoTopico1.setId(avaliacaoTopico.getId());
-        avaliacaoTopico1.setUsuario(usuarioRepository.getReferenceById(avaliacaoTopico.getUsuario().getId()));
+        avaliacaoTopico1.setUsuario(usuarioRepository.getById(avaliacaoTopico.getUsuario().getId()));
         avaliacaoTopico1.setNota(avaliacaoTopico.getNota());
         avaliacaoTopico1.setTitulo(avaliacaoTopico.getTitulo());
 
