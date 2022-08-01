@@ -44,6 +44,7 @@ public class UsuarioController{
     }
 
     @PostMapping(path="/salvar")
+
     public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO)
     {
         var usuario = new Usuario();
@@ -76,6 +77,11 @@ public class UsuarioController{
 
 
     @GetMapping()
+    @ApiOperation(value="Obter todos os usuários")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Usuários encontrados!"),
+            @ApiResponse(code = 404, message = "Usuários não encontrados!")
+    })
     public ResponseEntity get() {
         List<Usuario> usuario = usuarioService.getUsuario();
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
