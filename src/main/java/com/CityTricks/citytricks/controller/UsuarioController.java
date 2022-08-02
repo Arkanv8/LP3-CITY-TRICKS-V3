@@ -62,6 +62,7 @@ public class UsuarioController{
                     .senha(credenciais.getSenha()).build();
             UserDetails usuarioAutenticado = usuarioService.autenticar(usuario);
             String token = jwtService.gerarToken(usuario);
+            System.out.println(token);
             return new TokenDTO(usuario.getLogin(), token);
         } catch (UsernameNotFoundException | SenhaInvalidaException e ){
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, e.getMessage());
@@ -77,11 +78,6 @@ public class UsuarioController{
 
 
     @GetMapping()
-    @ApiOperation(value="Obter todos os usuários")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuários encontrados!"),
-            @ApiResponse(code = 404, message = "Usuários não encontrados!")
-    })
     public ResponseEntity get() {
         List<Usuario> usuario = usuarioService.getUsuario();
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
@@ -89,11 +85,6 @@ public class UsuarioController{
 
 
     @GetMapping("/{id}")
-    @ApiOperation(value="Obter detalhes de um Usuário")
-    @ApiResponses({
-            @ApiResponse(code = 200, message = "Usuário encontrado!"),
-            @ApiResponse(code = 404, message = "Usuário não encontrado!")
-    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
