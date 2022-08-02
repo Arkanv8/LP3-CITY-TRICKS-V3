@@ -8,6 +8,7 @@ import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.EstadoService;
 import com.CityTricks.citytricks.service.UsuarioService;
 import jakarta.validation.Valid;
+import lombok.var;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;

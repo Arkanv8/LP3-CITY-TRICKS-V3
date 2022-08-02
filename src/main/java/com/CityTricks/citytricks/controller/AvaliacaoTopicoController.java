@@ -4,7 +4,11 @@ import com.CityTricks.citytricks.dto.AvaliacaoTopicoDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.AvaliacaoTopico;
 import com.CityTricks.citytricks.service.AvaliacaoTopicoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
+import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,6 +36,11 @@ class AvaliacaoTopicoController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Salvar Avaliacao-Topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Salvado!"),
+            @ApiResponse(code = 400, message = "Não salvado")
+    })
     public ResponseEntity<Object> saveAvaliacaoTopico(@RequestBody @Valid AvaliacaoTopicoDTO avaliacaoTopicoDTO)
     {
         var avaliacaoTopico = new AvaliacaoTopico();
@@ -42,11 +51,21 @@ class AvaliacaoTopicoController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todas Avaliacoes-topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Listado"),
+            @ApiResponse(code = 400, message = "Não encontrado")
+    })
     public ResponseEntity get() {
         List<AvaliacaoTopico> avaliacaoTopico = avaliacaoTopicoService.getAvaliacaoTopico();
         return ResponseEntity.ok(avaliacaoTopico.stream().map(AvaliacaoTopicoDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Buscar Avaliacao-topico específico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Encontrado"),
+            @ApiResponse(code = 400, message = "Não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AvaliacaoTopico> avaliacaoTopico = avaliacaoTopicoService.getAvaliacaoTopicoById(id);
         if (!avaliacaoTopico.isPresent()) {
@@ -56,6 +75,11 @@ class AvaliacaoTopicoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir uma avaliacao-topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Excluido"),
+            @ApiResponse(code = 400, message = "Não encontrado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AvaliacaoTopico> avaliacaoTopico = avaliacaoTopicoService.getAvaliacaoTopicoById(id);
         if (!avaliacaoTopico.isPresent()) {
@@ -70,6 +94,11 @@ class AvaliacaoTopicoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Ajustar avaliacao-topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Ajustado"),
+            @ApiResponse(code = 400, message = "Não encontrado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid AvaliacaoTopicoDTO avaliacaoTopicoDTO) {
         Optional<AvaliacaoTopico> avaliacaoTopico = avaliacaoTopicoService.getAvaliacaoTopicoById(id);
         if(!avaliacaoTopico.isPresent())

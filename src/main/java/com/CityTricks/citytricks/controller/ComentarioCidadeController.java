@@ -5,6 +5,7 @@ import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.service.ComentarioCidadeService;
 import jakarta.validation.Valid;
+import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

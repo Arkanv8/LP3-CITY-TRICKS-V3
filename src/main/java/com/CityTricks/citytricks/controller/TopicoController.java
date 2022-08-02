@@ -6,6 +6,7 @@ import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.service.TopicoService;
 import jakarta.validation.Valid;
+import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

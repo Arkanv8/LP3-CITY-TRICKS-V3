@@ -10,6 +10,7 @@ import com.CityTricks.citytricks.security.JwtService;
 import com.CityTricks.citytricks.service.UsuarioService;
 import jakarta.validation.Valid;
 import io.swagger.annotations.*;
+import lombok.var;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,6 +60,11 @@ public class UsuarioController{
     }
 
     @PostMapping("/login")
+    @ApiOperation("GERAR TOKEN")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "TOKEN GERADO"),
+            @ApiResponse(code = 400, message = "TOKEN NÃO GERADO")
+    })
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
             Usuario usuario = Usuario.builder()
