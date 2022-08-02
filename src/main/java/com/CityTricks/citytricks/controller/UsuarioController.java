@@ -44,7 +44,11 @@ public class UsuarioController{
     }
 
     @PostMapping(path="/salvar")
-
+    @ApiOperation("Criar um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário Criado!"),
+            @ApiResponse(code = 400, message = "Não encontrado Usuário")
+    })
     public ResponseEntity<Object> saveUsuario(@RequestBody @Valid UsuarioDTO usuarioDTO)
     {
         var usuario = new Usuario();
@@ -54,7 +58,7 @@ public class UsuarioController{
         return new ResponseEntity<Object>(HttpStatus.OK);
     }
 
-    @PostMapping("/auth")
+    @PostMapping("/login")
     public TokenDTO autenticar(@RequestBody CredenciaisDTO credenciais){
         try{
             Usuario usuario = Usuario.builder()
@@ -69,21 +73,22 @@ public class UsuarioController{
         }
     }
 
-
-
-
-
-
-
-
-
     @GetMapping()
+    @ApiOperation("Lista todos os Usuários")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Todos os Usuarios"),
+            @ApiResponse(code = 400, message = "Não encontrado Usuários")
+    })
     public ResponseEntity get() {
         List<Usuario> usuario = usuarioService.getUsuario();
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
 
-
+    @ApiOperation("Listar apenas um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário Encontrado!"),
+            @ApiResponse(code = 400, message = "Não encontrado Usuário")
+    })
     @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
@@ -94,6 +99,11 @@ public class UsuarioController{
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir apenas um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário Deletado!"),
+            @ApiResponse(code = 400, message = "Não encontrado Usuário")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
@@ -108,6 +118,11 @@ public class UsuarioController{
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Alterar apenas um usuário")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Usuário Alterado!"),
+            @ApiResponse(code = 400, message = "Não encontrado Usuário")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid UsuarioDTO usuarioDTO) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if(!usuario.isPresent())

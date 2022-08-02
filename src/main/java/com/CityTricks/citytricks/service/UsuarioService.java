@@ -42,11 +42,12 @@ public class UsuarioService implements UserDetailsService {
 
         usuario1.setId(usuario.getId());
         usuario1.setNome(usuario.getNome());
+        usuario1.setLogin(usuario.getLogin());
+        usuario1.setSenha(usuario.getSenha());
+        usuario1.setAdmin(usuario.isAdmin());
         usuario1.setEmail(usuario.getEmail());
         usuario1.setCidade(usuario.getCidade());
         usuario1.setPontuacoes(preenchePontuacao(usuario.getPontuacoes(), usuario1));
-        usuario1.setSenha(usuario.getSenha());
-        usuario1.setAdmin(usuario.isAdmin());
         usuarioRepository.save(usuario1);
 
         return usuario1;
@@ -84,7 +85,9 @@ public class UsuarioService implements UserDetailsService {
 
     public UserDetails autenticar(Usuario usuario){
         UserDetails user = loadUserByUsername(usuario.getLogin());
-        boolean senhasBatem = encoder.matches(usuario.getSenha(), user.getPassword());
+        System.out.println(usuario.getSenha());
+        System.out.println(user.getPassword());
+        boolean senhasBatem = (usuario.getSenha().equals(user.getPassword()));
 
         if (senhasBatem){
             return user;

@@ -13,6 +13,8 @@ public class UsuarioDTO {
 
     private Long id;
     private String email;
+
+    private String login;
     private String senha;
     private String nome;
     private String cidade;
@@ -26,6 +28,7 @@ public class UsuarioDTO {
         dto.email = usuario.getEmail();
         dto.senha = usuario.getSenha();
         dto.nome = usuario.getNome();
+        dto.login = usuario.getLogin();
         if(usuario.getPontuacoes() != null)
         {
             dto.pontuacoes = modelMapper.map(usuario.getPontuacoes(), PontuacaoDTO.class);
@@ -34,8 +37,5 @@ public class UsuarioDTO {
 
         return modelMapper.map(usuario, UsuarioDTO.class);
     }
-
-
-
 
 }
