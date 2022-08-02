@@ -7,6 +7,9 @@ import com.CityTricks.citytricks.model.entity.AvaliacaoCidade;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.AvaliacaoCidadeService;
 import com.CityTricks.citytricks.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
@@ -36,6 +39,11 @@ public class AvaliacaoCidadeController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Salvar Uma Avaliacao")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Avaliacao salva!"),
+            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+    })
     public ResponseEntity<Object> saveAvaliacaoCidade(@RequestBody @Valid AvaliacaoCidadeDTO avaliacaoCidadeDTO)
     {
         var avaliacaoCidade = new AvaliacaoCidade();
@@ -47,11 +55,21 @@ public class AvaliacaoCidadeController {
 
 
     @GetMapping()
+    @ApiOperation("Abrir Todas as avaliacoes")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "avaliações encontradas"),
+            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+    })
     public ResponseEntity get() {
         List<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidade();
         return ResponseEntity.ok(avaliacaoCidade.stream().map(AvaliacaoCidadeDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Abrir Uma Avaliacao Específica")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "avaliação encontrada"),
+            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);
         if (!avaliacaoCidade.isPresent()) {
@@ -61,6 +79,11 @@ public class AvaliacaoCidadeController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir uma avaliacao")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "avaliação excluida"),
+            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);
         if (!avaliacaoCidade.isPresent()) {
@@ -75,6 +98,11 @@ public class AvaliacaoCidadeController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Ajustar uma Avaliacao")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Avaliacao Ajustada"),
+            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid AvaliacaoCidadeDTO avaliacaoCidadeDTO) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);
         if(!avaliacaoCidade.isPresent())
