@@ -7,6 +7,9 @@ import com.CityTricks.citytricks.model.entity.Estado;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.EstadoService;
 import com.CityTricks.citytricks.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
 import org.modelmapper.ModelMapper;
@@ -37,6 +40,11 @@ public class EstadoController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Adicionar um Estado")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Estado adicionado!"),
+            @ApiResponse(code = 400, message = "Erro ao adicionar estado")
+    })
     public ResponseEntity<Object> saveEstado(@RequestBody @Valid EstadoDTO estadoDTO)
     {
         var estado = new Estado();
@@ -47,11 +55,21 @@ public class EstadoController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todos os estados")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Estados listados!"),
+            @ApiResponse(code = 400, message = "Erro ao listar estados")
+    })
     public ResponseEntity get() {
         List<Estado> estado = estadoService.getEstado();
         return ResponseEntity.ok(estado.stream().map(EstadoDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Listar um estado específico (PELO ID)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Estado listado!"),
+            @ApiResponse(code = 400, message = "Erro ao listar estado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Estado> estado = estadoService.getEstadoById(id);
         if (!estado.isPresent()) {
@@ -61,6 +79,11 @@ public class EstadoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir um estado")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Estado Excluída"),
+            @ApiResponse(code = 400, message = "Erro ao excluir estado")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Estado> estado = estadoService.getEstadoById(id);
         if (!estado.isPresent()) {
@@ -75,6 +98,11 @@ public class EstadoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Editar um estado")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Estado alterado"),
+            @ApiResponse(code = 400, message = "Erro ao editar estado")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid EstadoDTO estadoDTO) {
         Optional<Estado> estado = estadoService.getEstadoById(id);
         if(!estado.isPresent())

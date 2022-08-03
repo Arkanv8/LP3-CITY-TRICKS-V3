@@ -6,6 +6,9 @@ import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioTopico;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.ComentarioTopicoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +38,11 @@ public class ComentarioTopicoController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Adicionar um Comentario-Topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Topico adicionado!"),
+            @ApiResponse(code = 400, message = "Erro ao adicionar Comentario-Topico")
+    })
     public ResponseEntity<Object> saveComentarioTopico(@RequestBody @Valid ComentarioTopicoDTO comentarioTopicoDTO)
     {
         var comentarioTopico = new ComentarioTopico();
@@ -45,11 +53,21 @@ public class ComentarioTopicoController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todos os Comentarios-Topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Listados!"),
+            @ApiResponse(code = 400, message = "Erro ao listar")
+    })
     public ResponseEntity get() {
         List<ComentarioTopico> comentarioTopico = comentarioTopicoService.getComentarioTopico();
         return ResponseEntity.ok(comentarioTopico.stream().map(ComentarioTopicoDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Listar um Comentario-Topico específico (PELO ID)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Topico encontrado!"),
+            @ApiResponse(code = 400, message = "Erro ao buscar Comentario-Topico")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ComentarioTopico> comentarioTopico = comentarioTopicoService.getComentarioTopicoById(id);
         if (!comentarioTopico.isPresent()) {
@@ -59,6 +77,11 @@ public class ComentarioTopicoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir um Comentario-Topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Topico excluído"),
+            @ApiResponse(code = 400, message = "Erro ao excluir Comentario-Topico")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ComentarioTopico> comentarioTopico = comentarioTopicoService.getComentarioTopicoById(id);
         if (!comentarioTopico.isPresent()) {
@@ -73,6 +96,11 @@ public class ComentarioTopicoController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Editar um Comentario-Topico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Topico alterado!"),
+            @ApiResponse(code = 400, message = "Erro ao editar Comentario-Topico")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid ComentarioTopicoDTO comentarioTopicoDTO) {
         Optional<ComentarioTopico> comentarioTopico = comentarioTopicoService.getComentarioTopicoById(id);
         if(!comentarioTopico.isPresent())

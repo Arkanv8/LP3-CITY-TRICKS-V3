@@ -90,7 +90,7 @@ public class UsuarioController{
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
 
-    @ApiOperation("Listar apenas um usuário")
+    @ApiOperation("Listar apenas um usuário (PELO ID)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Usuário Encontrado!"),
             @ApiResponse(code = 400, message = "Não encontrado Usuário")

@@ -61,7 +61,7 @@ class AvaliacaoTopicoController {
         return ResponseEntity.ok(avaliacaoTopico.stream().map(AvaliacaoTopicoDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
-    @ApiOperation("Buscar Avaliacao-topico específico")
+    @ApiOperation("Buscar Avaliacao-topico específico (PELO ID)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Encontrado"),
             @ApiResponse(code = 400, message = "Não encontrado")

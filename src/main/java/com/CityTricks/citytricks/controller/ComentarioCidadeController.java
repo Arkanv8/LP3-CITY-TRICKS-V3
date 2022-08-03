@@ -4,6 +4,9 @@ import com.CityTricks.citytricks.dto.ComentarioCidadeDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.service.ComentarioCidadeService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +37,11 @@ public class ComentarioCidadeController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Adicionar um Comentario-Cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario adicionado"),
+            @ApiResponse(code = 400, message = "Erro ao adicionar comentário")
+    })
     public ResponseEntity<Object> saveComentario(@RequestBody @Valid ComentarioCidadeDTO comentarioCidadeDTO)
     {
         var comentarioCidade = new ComentarioCidade();
@@ -44,11 +52,21 @@ public class ComentarioCidadeController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todos os comentários")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentários encontrados!"),
+            @ApiResponse(code = 400, message = "Erro ao buscar comentários")
+    })
     public ResponseEntity get() {
         List<ComentarioCidade> comentarioCidade = comentarioCidadeService.getComentarioCidade();
         return ResponseEntity.ok(comentarioCidade.stream().map(ComentarioCidadeDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Listar um Comentario-Cidade específico (PELO ID)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Encontrado!"),
+            @ApiResponse(code = 400, message = "Erro ao buscar Comentario-Cidade")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<ComentarioCidade> comentarioCidade = comentarioCidadeService.getComentarioCidadeById(id);
         if (!comentarioCidade.isPresent()) {
@@ -58,6 +76,11 @@ public class ComentarioCidadeController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir um Comentario-Cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Cidade Excluída"),
+            @ApiResponse(code = 400, message = "Erro ao excluir Comentario-Cidade")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<ComentarioCidade> comentarioCidade = comentarioCidadeService.getComentarioCidadeById(id);
         if (!comentarioCidade.isPresent()) {
@@ -72,6 +95,11 @@ public class ComentarioCidadeController {
     }
 
     @PutMapping("{id}")
+    @ApiOperation("Editar um Comentário-Cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Comentario-Cidade alterado!"),
+            @ApiResponse(code = 400, message = "Erro ao alterar Comentario-Cidade")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid ComentarioCidadeDTO comentarioCidadeDTO) {
         Optional<ComentarioCidade> comentarioCidade = comentarioCidadeService.getComentarioCidadeById(id);
         if(!comentarioCidade.isPresent())

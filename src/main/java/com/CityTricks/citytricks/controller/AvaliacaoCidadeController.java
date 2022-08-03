@@ -66,7 +66,7 @@ public class AvaliacaoCidadeController {
         return ResponseEntity.ok(avaliacaoCidade.stream().map(AvaliacaoCidadeDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
-    @ApiOperation("Abrir Uma Avaliacao Específica")
+    @ApiOperation("Abrir Uma Avaliacao Específica (PELO ID)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Avaliação encontrada"),
             @ApiResponse(code = 400, message = "Não encontrada nenhuma avaliação")

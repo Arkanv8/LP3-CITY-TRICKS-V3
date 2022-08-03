@@ -5,6 +5,9 @@ import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.service.TopicoService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
 import org.springframework.beans.BeanUtils;
@@ -35,6 +38,11 @@ public class TopicoController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Adicionar um Tópico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Tópico adicionado"),
+            @ApiResponse(code = 400, message = "Erro ao adicionar tópico")
+    })
     public ResponseEntity<Object> saveTopico(@RequestBody @Valid TopicoDTO topicoDTO)
     {
         var topico = new Topico();
@@ -46,11 +54,21 @@ public class TopicoController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todos os tópicos")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Tópicos Listados"),
+            @ApiResponse(code = 400, message = "Erro ao listar tópicos")
+    })
     public ResponseEntity get() {
         List<Topico> topico = topicoService.getTopico();
         return ResponseEntity.ok(topico.stream().map(TopicoDTO::create).collect(Collectors.toList()));
     }
     @GetMapping("/{id}")
+    @ApiOperation("Listar um tópico específico (PELO ID)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Tópico encontrado!"),
+            @ApiResponse(code = 400, message = "Erro ao buscar tópico")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Topico> topico = topicoService.getTopicoById(id);
         if (!topico.isPresent()) {
@@ -60,6 +78,11 @@ public class TopicoController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Editar um tópico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Tópico alterado"),
+            @ApiResponse(code = 400, message = "Erro ao editar um tópico")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id) {
         Optional<Topico> topico = topicoService.getTopicoById(id);
         if (!topico.isPresent()) {
@@ -70,6 +93,11 @@ public class TopicoController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir um tópico")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Tópico Excluído"),
+            @ApiResponse(code = 400, message = "Erro ao excluir tópico")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Topico> topico = topicoService.getTopicoById(id);
         if (!topico.isPresent()) {
