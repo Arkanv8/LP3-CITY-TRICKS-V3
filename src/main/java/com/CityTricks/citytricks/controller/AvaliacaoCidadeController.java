@@ -43,7 +43,7 @@ public class AvaliacaoCidadeController {
     @ApiOperation("Salvar Uma Avaliacao")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Avaliacao salva!"),
-            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+            @ApiResponse(code = 400, message = "Erro em salvar avaliação")
     })
     public ResponseEntity<Object> saveAvaliacaoCidade(@RequestBody @Valid AvaliacaoCidadeDTO avaliacaoCidadeDTO)
     {
@@ -58,8 +58,8 @@ public class AvaliacaoCidadeController {
     @GetMapping()
     @ApiOperation("Abrir Todas as avaliacoes")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "avaliações encontradas"),
-            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+            @ApiResponse(code = 201, message = "Avaliações encontradas"),
+            @ApiResponse(code = 400, message = "Não encontrada nenhuma avaliação")
     })
     public ResponseEntity get() {
         List<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidade();
@@ -68,8 +68,8 @@ public class AvaliacaoCidadeController {
     @GetMapping("/{id}")
     @ApiOperation("Abrir Uma Avaliacao Específica")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "avaliação encontrada"),
-            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+            @ApiResponse(code = 201, message = "Avaliação encontrada"),
+            @ApiResponse(code = 400, message = "Não encontrada nenhuma avaliação")
     })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);
@@ -82,8 +82,8 @@ public class AvaliacaoCidadeController {
     @DeleteMapping("/delete/{id}")
     @ApiOperation("Excluir uma avaliacao")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "avaliação excluida"),
-            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+            @ApiResponse(code = 201, message = "Avaliação excluida"),
+            @ApiResponse(code = 400, message = "Não encontrada nenhuma avaliação")
     })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);
@@ -101,8 +101,8 @@ public class AvaliacaoCidadeController {
     @PutMapping("{id}")
     @ApiOperation("Ajustar uma Avaliacao")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Avaliacao Ajustada"),
-            @ApiResponse(code = 400, message = "Não encontrado avaliacao")
+            @ApiResponse(code = 201, message = "Avaliacao ajustada"),
+            @ApiResponse(code = 400, message = "Erro ao criar avaliação")
     })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid AvaliacaoCidadeDTO avaliacaoCidadeDTO) {
         Optional<AvaliacaoCidade> avaliacaoCidade = avaliacaoCidadeService.getAvaliacaoCidadeById(id);

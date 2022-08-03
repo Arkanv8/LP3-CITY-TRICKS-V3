@@ -6,6 +6,9 @@ import com.CityTricks.citytricks.model.entity.Cidade;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.CidadeService;
 import com.CityTricks.citytricks.service.UsuarioService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
 import org.modelmapper.ModelMapper;
@@ -36,6 +39,11 @@ public class CidadeController {
     }
 
     @PostMapping(path="/salvar")
+    @ApiOperation("Adicionar uma cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cidade adicionada"),
+            @ApiResponse(code = 400, message = "Erro ao criar uma cidade")
+    })
     public ResponseEntity<Object> saveCidade(@RequestBody @Valid CidadeDTO cidadeDTO)
     {
         var cidade = new Cidade();
@@ -49,12 +57,22 @@ public class CidadeController {
     }
 
     @GetMapping()
+    @ApiOperation("Listar todas as cidades")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Todas as cidades listadas"),
+            @ApiResponse(code = 400, message = "Erro ao listar todas as cidades")
+    })
     public ResponseEntity get() {
         List<Cidade> cidade = cidadeService.getCidade();
         return ResponseEntity.ok(cidade.stream().map(CidadeDTO::create).collect(Collectors.toList()));
     }
 
     @GetMapping("/{id}")
+    @ApiOperation("Listar uma cidade específica (pelo ID)")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cidade encontrada!"),
+            @ApiResponse(code = 400, message = "Não encontrado")
+    })
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Cidade> cidade = cidadeService.getCidadeById(id);
         if (!cidade.isPresent()) {
@@ -64,6 +82,11 @@ public class CidadeController {
     }
 
     @PutMapping("/{id}")
+    @ApiOperation("Alterar cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cidade alterada"),
+            @ApiResponse(code = 400, message = "Erro ao alterar cidade")
+    })
     public ResponseEntity atualizar(@PathVariable("id") Long id, @RequestBody @Valid CidadeDTO cidadeDTO) {
         Optional<Cidade> cidade = cidadeService.getCidadeById(id);
         if(!cidade.isPresent())
@@ -80,6 +103,11 @@ public class CidadeController {
     }
 
     @DeleteMapping("/delete/{id}")
+    @ApiOperation("Excluir uma cidade")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Cidade Excluída"),
+            @ApiResponse(code = 400, message = "Erro ao excluir cidade")
+    })
     public ResponseEntity excluir(@PathVariable("id") Long id) {
         Optional<Cidade> cidade = cidadeService.getCidadeById(id);
         if (!cidade.isPresent()) {
