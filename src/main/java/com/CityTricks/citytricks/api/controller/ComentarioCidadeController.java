@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
-@RequestMapping("/comentario")
+@RequestMapping("/api/v1/comentario")
 public class ComentarioCidadeController {
 
     private final ComentarioCidadeService comentarioCidadeService;

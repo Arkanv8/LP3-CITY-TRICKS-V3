@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
-@RequestMapping("/topico")
+@RequestMapping("/api/v1/topico")
 
 public class TopicoController {
 

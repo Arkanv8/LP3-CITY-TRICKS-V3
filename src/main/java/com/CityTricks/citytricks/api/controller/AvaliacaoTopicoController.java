@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = ("*"), maxAge = 3688)
-@RequestMapping("/avaliacao-topico")
+@RequestMapping("/api/v1/avaliacao-topico")
 class AvaliacaoTopicoController {
 
     private final AvaliacaoTopicoService avaliacaoTopicoService;

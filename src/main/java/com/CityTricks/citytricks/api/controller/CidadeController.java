@@ -23,7 +23,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
-@RequestMapping("/cidade")
+@RequestMapping("/api/v1/cidade")
 public class CidadeController {
 
     private final CidadeService cidadeService;

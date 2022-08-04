@@ -46,8 +46,6 @@ public class JwtService {
                 .getBody();
     }
 
-
-
      public boolean tokenValido(String token){
         try{
             Claims claims = obterClaims(token);
@@ -61,11 +59,7 @@ public class JwtService {
         }
     }
 
-
-
       public String obterLoginUsuario(String token) {
         return (String) obterClaims(token).getSubject();
     }
-    
-
 }

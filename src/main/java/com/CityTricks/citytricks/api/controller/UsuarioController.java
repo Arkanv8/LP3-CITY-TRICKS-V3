@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "*", maxAge = 3688)
-@RequestMapping("/usuario")
+@RequestMapping("/api/v1/usuario")
 @Api("API de Usuários")
 
 public class UsuarioController{
