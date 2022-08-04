@@ -90,12 +90,12 @@ public class UsuarioController{
         return ResponseEntity.ok(usuario.stream().map(UsuarioDTO::create).collect(Collectors.toList()));
     }
 
+    @GetMapping("/{id}")
     @ApiOperation("Listar apenas um usuário (PELO ID)")
     @ApiResponses({
             @ApiResponse(code = 201, message = "Usuário Encontrado!"),
             @ApiResponse(code = 400, message = "Não encontrado Usuário")
     })
-    @GetMapping("/{id}")
     public ResponseEntity get(@PathVariable("id") Long id) {
         Optional<Usuario> usuario = usuarioService.getUsuarioById(id);
         if (!usuario.isPresent()) {
