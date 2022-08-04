@@ -1,6 +1,6 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.*;
+import com.CityTricks.citytricks.api.dto.CidadeDTO;
 import com.CityTricks.citytricks.model.entity.*;
 import com.CityTricks.citytricks.model.repository.CidadeRepository;
 import com.CityTricks.citytricks.model.repository.EstadoRepository;
@@ -8,11 +8,9 @@ import com.CityTricks.citytricks.model.repository.PaisRepository;
 import com.CityTricks.citytricks.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.*;
-import java.util.stream.Collectors;
 
 
 @Service

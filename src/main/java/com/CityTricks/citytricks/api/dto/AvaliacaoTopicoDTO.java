@@ -1,6 +1,5 @@
-package com.CityTricks.citytricks.dto;
+package com.CityTricks.citytricks.api.dto;
 
-import com.CityTricks.citytricks.model.entity.AvaliacaoCidade;
 import com.CityTricks.citytricks.model.entity.AvaliacaoTopico;
 import lombok.AllArgsConstructor;
 import lombok.Data;

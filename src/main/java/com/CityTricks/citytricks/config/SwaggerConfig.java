@@ -27,7 +27,7 @@ public class SwaggerConfig {
                 .useDefaultResponseMessages(false)
                 .select()
                 .apis(RequestHandlerSelectors
-                        .basePackage("com.CityTricks.citytricks.controller"))
+                        .basePackage("com.CityTricks.citytricks.api.controller"))
                 .paths(PathSelectors.any())
                 .build()
                 .securityContexts(Arrays.asList(securityContext()))

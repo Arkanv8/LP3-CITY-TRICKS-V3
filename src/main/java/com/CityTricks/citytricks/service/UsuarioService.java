@@ -1,12 +1,11 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.PontuacaoDTO;
-import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.api.dto.PontuacaoDTO;
+import com.CityTricks.citytricks.api.dto.UsuarioDTO;
 import com.CityTricks.citytricks.exception.SenhaInvalidaException;
 import com.CityTricks.citytricks.model.entity.Pontuacao;
 import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.model.repository.UsuarioRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,7 +1,6 @@
-package com.CityTricks.citytricks.dto;
+package com.CityTricks.citytricks.api.dto;
 
 import com.CityTricks.citytricks.model.entity.Pontuacao;
-import com.CityTricks.citytricks.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

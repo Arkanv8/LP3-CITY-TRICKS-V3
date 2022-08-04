@@ -1,6 +1,6 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.EstadoDTO;
+import com.CityTricks.citytricks.api.dto.EstadoDTO;
 import com.CityTricks.citytricks.model.entity.Estado;
 import com.CityTricks.citytricks.model.repository.EstadoRepository;
 import org.springframework.beans.factory.annotation.Autowired;

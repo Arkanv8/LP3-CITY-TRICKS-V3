@@ -1,7 +1,6 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.AvaliacaoTopicoDTO;
-import com.CityTricks.citytricks.model.entity.AvaliacaoCidade;
+import com.CityTricks.citytricks.api.dto.AvaliacaoTopicoDTO;
 import com.CityTricks.citytricks.model.entity.AvaliacaoTopico;
 import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.model.repository.AvaliacaoTopicoRepository;

@@ -1,11 +1,8 @@
-package com.CityTricks.citytricks.controller;
-import com.CityTricks.citytricks.dto.CidadeDTO;
-import com.CityTricks.citytricks.dto.UsuarioDTO;
+package com.CityTricks.citytricks.api.controller;
+import com.CityTricks.citytricks.api.dto.CidadeDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Cidade;
-import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.CidadeService;
-import com.CityTricks.citytricks.service.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -17,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

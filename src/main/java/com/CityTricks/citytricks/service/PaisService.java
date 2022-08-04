@@ -1,8 +1,6 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.CidadeDTO;
-import com.CityTricks.citytricks.dto.PaisDTO;
-import com.CityTricks.citytricks.model.entity.Cidade;
+import com.CityTricks.citytricks.api.dto.PaisDTO;
 import com.CityTricks.citytricks.model.entity.Pais;
 import com.CityTricks.citytricks.model.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;

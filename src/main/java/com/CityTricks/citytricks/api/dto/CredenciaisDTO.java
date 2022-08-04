@@ -1,4 +1,4 @@
-package com.CityTricks.citytricks.dto;
+package com.CityTricks.citytricks.api.dto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,6 +1,6 @@
-package com.CityTricks.citytricks.controller;
+package com.CityTricks.citytricks.api.controller;
 
-import com.CityTricks.citytricks.dto.AvaliacaoTopicoDTO;
+import com.CityTricks.citytricks.api.dto.AvaliacaoTopicoDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.AvaliacaoTopico;
 import com.CityTricks.citytricks.service.AvaliacaoTopicoService;

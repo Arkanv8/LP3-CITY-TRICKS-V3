@@ -1,6 +1,6 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.ComentarioTopicoDTO;
+import com.CityTricks.citytricks.api.dto.ComentarioTopicoDTO;
 import com.CityTricks.citytricks.model.entity.ComentarioTopico;
 import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.model.repository.ComentarioTopicoRepository;

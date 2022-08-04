@@ -1,6 +1,6 @@
-package com.CityTricks.citytricks.controller;
+package com.CityTricks.citytricks.api.controller;
 
-import com.CityTricks.citytricks.dto.ComentarioCidadeDTO;
+import com.CityTricks.citytricks.api.dto.ComentarioCidadeDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioCidade;
 import com.CityTricks.citytricks.service.ComentarioCidadeService;

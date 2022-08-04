@@ -1,13 +1,9 @@
 package com.CityTricks.citytricks.service;
 
-import com.CityTricks.citytricks.dto.ComentarioCidadeDTO;
-import com.CityTricks.citytricks.dto.TopicoDTO;
+import com.CityTricks.citytricks.api.dto.ComentarioCidadeDTO;
 import com.CityTricks.citytricks.model.entity.Cidade;
-import com.CityTricks.citytricks.model.entity.Comentario;
 import com.CityTricks.citytricks.model.entity.ComentarioCidade;
-import com.CityTricks.citytricks.model.entity.Topico;
 import com.CityTricks.citytricks.model.repository.ComentarioCidadeRepository;
-import com.CityTricks.citytricks.model.repository.TopicoRepository;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

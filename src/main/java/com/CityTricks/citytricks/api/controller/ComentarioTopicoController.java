@@ -1,10 +1,8 @@
-package com.CityTricks.citytricks.controller;
+package com.CityTricks.citytricks.api.controller;
 
-import com.CityTricks.citytricks.dto.ComentarioTopicoDTO;
-import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.api.dto.ComentarioTopicoDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.ComentarioTopico;
-import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.ComentarioTopicoService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;

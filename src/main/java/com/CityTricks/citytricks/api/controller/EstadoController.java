@@ -1,18 +1,14 @@
-package com.CityTricks.citytricks.controller;
+package com.CityTricks.citytricks.api.controller;
 
-import com.CityTricks.citytricks.dto.EstadoDTO;
-import com.CityTricks.citytricks.dto.UsuarioDTO;
+import com.CityTricks.citytricks.api.dto.EstadoDTO;
 import com.CityTricks.citytricks.exception.RegraNegocioException;
 import com.CityTricks.citytricks.model.entity.Estado;
-import com.CityTricks.citytricks.model.entity.Usuario;
 import com.CityTricks.citytricks.service.EstadoService;
-import com.CityTricks.citytricks.service.UsuarioService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import jakarta.validation.Valid;
 import lombok.var;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
